@@ -12,9 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fastify/cors": "^9.0.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "fastify": "^4.28.0",
+    "express": "^4.19.2",
     "puppeteer": "^22.12.0"
   }
 }
