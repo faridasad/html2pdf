@@ -2,6 +2,8 @@
 import Fastify from "fastify";
 import puppeteer from "puppeteer";
 import fastifyCors from "@fastify/cors";
+import dotenv from "dotenv"
+dotenv.config()
 
 const fastify = Fastify({
   logger: true,
@@ -50,7 +52,7 @@ fastify.post("/html2pdf", async (request, reply) => {
   }
 });
 
-fastify.listen({ port: 3000 }, (err, address) => {
+fastify.listen({ port: process.env.PORT || 3001 }, (err, address) => {
   if (err) throw err;
   // Server is now listening on ${address}
 });
