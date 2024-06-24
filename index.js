@@ -2,12 +2,13 @@ import express from "express";
 import puppeteer from "puppeteer";
 import cors from "cors";
 import bodyParser from "body-parser";
+import { config } from "dotenv";
+config()
 
 const app = express();
 
-// Middleware
 app.use(cors());
-app.use(bodyParser.json({ limit: "50mb" })); // To handle large HTML content
+app.use(bodyParser.json({ limit: "50mb" }));
 
 app.post("/html2pdf", async (req, res) => {
   try {
@@ -18,9 +19,16 @@ app.post("/html2pdf", async (req, res) => {
     }
 
     const browser = await puppeteer.launch({
-      headless: "new",
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      timeout: 60000,
+      args: [
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--single-process",
+        "--no-zygote",
+      ],
+      executablePath:
+        process.env.NODE_ENV === "production"
+          ? process.env.PUPPETEER_EXECUTABLE_PATH
+          : puppeteer.executablePath(),
     });
 
     const page = await browser.newPage();
